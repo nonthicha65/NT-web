@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- ✅ SheetJS Library สำหรับอ่านไฟล์ Excel -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    
+    <!-- ✅ Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    
+    <!-- ✨ เพิ่ม Cloudinary Upload Widget -->
+    <script src="https://upload-widget.cloudinary.com/global/all.js"></script>
+    
+    <!-- Firebase Configuration -->
+    <script>
+        // 🔥 Firebase Configuration & Initialization
+        const firebaseConfig = {
+            apiKey: "AIzaSyB_qylditvP3Cxt7JECSRtP66dDWazYxBA",
+            authDomain: "nt-engineering-data.firebaseapp.com",
+            databaseURL: "https://nt-engineering-data-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "nt-engineering-data",
+            storageBucket: "nt-engineering-data.firebasestorage.app",
+            messagingSenderId: "232559601242",
+            appId: "1:232559601242:web:4730822ac59c40e2d35a63"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        
+        console.log("✅ Firebase initialized successfully!");
+    </script>
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- ===== ปุ่ม toggle sidebar (อยู่นอก sidebar) ===== -->
+    <button class="toggle-sidebar" id="toggleSidebar">
+        <i class="fas fa-bars"></i>
+    </button>
+    
+    
+    <!-- ===== Overlay สำหรับมือถือ ===== -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    
+    <!-- ===== Sidebar ===== -->
+    <div class="sidebar" id="sidebar">
+        <div class="admin-header">
+            <div class="admin-avatar"><i class="fas fa-user"></i></div>
+            <div class="admin-name">Admin</div>
+        </div>
+        
+        <!-- Pages Section -->
+        <div class="menu-section-title">Pages</div>
+        <div class="menu-item" data-submenu="submenu1">
+    <a href="maeta.html" style="text-decoration: none; color: inherit; display: flex; align-items: center; width: 100%;">
+        <i class="fa-solid fa-mountain-sun"></i> 
+        <span style="flex: 1;">แม่ทา</span>
+        <i class="fas fa-chevron-down menu-arrow"></i>
+    </a>
+</div>
+        
+        <!-- Sub Menu -->
+        <div class="submenu-container" id="submenu1">
+            <div class="menu-sub-item">Air Conditioner</div>
+            <div class="menu-sub-item">Battery</div>
+            <div class="menu-sub-item">Generator</div>
+            <div class="menu-sub-item">Transformer</div>
+            <div class="menu-sub-item">Rectifier</div>
+        </div>
+
+        <!-- Menu2 -->
+        <div class="menu-item" data-submenu="submenu2">
+            <i class="fa-solid fa-mountain"></i> 
+            <span>เขาห้วยแก้ว</span>
+            <i class="fas fa-chevron-down menu-arrow"></i>
+        </div>
+        <div class="submenu-container" id="submenu2">
+            <div class="menu-sub-item">Air Conditioner</div>
+            <div class="menu-sub-item">Battery</div>
+            <div class="menu-sub-item">Generator</div>
+            <div class="menu-sub-item">Transformer</div>
+            <div class="menu-sub-item">Rectifier</div>
+        </div>
+
+        <!-- Menu3 -->
+        <div class="menu-item" data-submenu="submenu3">
+            <i class="fa-solid fa-wheat-awn"></i> 
+            <span>อุโมงค์</span>
+            <i class="fas fa-chevron-down menu-arrow"></i>
+        </div>
+        <div class="submenu-container" id="submenu3">
+            <div class="menu-sub-item">Air Conditioner</div>
+            <div class="menu-sub-item">Battery</div>
+            <div class="menu-sub-item">Generator</div>
+            <div class="menu-sub-item">Transformer</div>
+            <div class="menu-sub-item">Rectifier</div>
+        </div>
+
+        <!-- Menu4 -->
+        <div class="menu-item" data-submenu="submenu4">
+            <i class="fa-solid fa-landmark"></i> 
+            <span>ชส.ลำพูน1</span>
+            <i class="fas fa-chevron-down menu-arrow"></i>
+        </div>
+        <div class="submenu-container" id="submenu4">
+            <div class="menu-sub-item">Air Conditioner</div>
+            <div class="menu-sub-item">Battery</div>
+            <div class="menu-sub-item">Generator</div>
+            <div class="menu-sub-item">Transformer</div>
+            <div class="menu-sub-item">Rectifier</div>
+        </div>
+        
+        
+        <div class="logo">
+            <img src="logo.png" alt="Logo">
+        </div>
+    </div>
+
+    <!-- ===== Main Content ===== -->
+    <div class="main-content">
+        <div class="top-bar">
+            <div class="dropdown-section">
+                
+            </div>
+            <div style="display: flex; gap: 15px;">
+               
+                <button class="icon-btn"><i class="fas fa-cog"></i></button>
+            </div>
+        </div>
+
+        <div style="margin-bottom: 20px; color: #666;">Today <i class="fa-solid fa-caret-down"></i></div>
+
+        <div class="stats-container">
+            <div class="stat-card yellow">
+                <div class="stat-label">แบตเตอร์รี่</div>
+                <div class="stat-value">7,265</div>
+            </div>
+            <div class="stat-card blue">
+                <div class="stat-label">โซล่าเซลล์</div>
+                <div class="stat-value">3,671</div>
+            </div>
+            <div class="stat-card yellow">
+                <div class="stat-label">เครื่องแอร์</div>
+                <div class="stat-value">156</div>
+            </div>
+            <div class="stat-card blue">
+                <div class="stat-label">หม้อแปลง</div>
+                <div class="stat-value">2,318</div>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <div class="table-header">
+                <!-- wrapper สำหรับ search -->
+                <div class="search-wrapper">
+                    <!-- Dropdown เลือกประเภทการค้นหา -->
+                    <select class="search-type" id="searchType">
+                        <option value="all">ทั้งหมด</option>
+                        <option value="code">รหัส 10 หลัก</option>
+                        <option value="shortname">ชื่อย่อ</option>
+                        <option value="thainame">ชื่อไทย</option>
+                        <option value="engname">ชื่ออังกฤษ</option>
+                        <option value="company">ชื่อบริษัท</option>
+                    </select>
+                    
+                    <!-- ช่องค้นหา -->
+                    <input type="text" class="search-box" id="searchInput" placeholder="ค้นหาทั้งหมด...">
+                    
+                    <!-- ปุ่มค้นหา -->
+                    <button class="search-btn" id="searchBtn">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+                
+                <!-- ปุ่ม Add Excel -->
+                <button class="add-btn" id="addExcelBtn"><i class="fas fa-plus"></i> Add Excel</button>
+                <input type="file" id="excelFileInput" accept=".xlsx,.xls" style="display: none;">
+            </div>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th><input type="checkbox"></th>
+                            <th>ลำดับ </th>
+                            <th>รหัส 10 หลัก </th>
+                            <th>ภาคขายและบริการ</th>
+                            <th>ชื่อย่อสถานที่</th>
+                            <th>ชื่อสถานที่(ไทย) </i></th>
+                            <th>ชื่อสถานที่(อังกฤษ)</th>
+                            <th>ชื่อบริษัท </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input type="checkbox"></td>
+                            <td>1</td>
+                            <td>5101000001</td>
+                            <td>ภูมิภาค 3</td>
+                            <td><span class="status-badge status-open">LPN1</span></td>
+                            <td>ลำพูน 1<br><small style="color: #999;">ลำพูน 1</small></td>
+                            <td>LAMPHUN 1<br><small style="color: #999;">LAMPHUN 1</small></td>
+                            <td>NT2</td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox"></td>
+                            <td>2</td>
+                            <td>5101000001</td>
+                            <td>ภูมิภาค 3</td>
+                            <td><span class="status-badge status-paid">MAKC</span></td>
+                            <td>มะเขือแจ้<br><small style="color: #999;">มะเขือแจ้</small></td></td>
+                            <td>MAKHUEA CHAE<br><small style="color: #999;">MAKHUEA CHAE</small></td>
+                            <td>NT2</td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox"></td>
+                            <td>3</td>
+                            <td>5101000001</td>
+                            <td>ภูมิภาค 3</td>
+                            <td><span class="status-badge status-open">LPN1</span></td>
+                            <td>อุโมงค์<br><small style="color: #999;">อุโมงค์</small></td>
+                            <td>UMONG<br><small style="color: #999;">UMONG</small></td>
+                            <td>NT2</td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox"></td>
+                            <td>4</td>
+                            <td>5101000001</td>
+                            <td>ภูมิภาค 3</td>
+                            <td><span class="status-badge status-open">UMG</span></td>
+                            <td>นิคมอุตสาหกรรมลำพูน<br><small style="color: #999;">นิคมอุตสาหกรรมลำพูน</small></td>
+                            <td>NIKHOM UTSAHAKAM LAMPHUN<br><small style="color: #999;">NIKHOM UTSAHAKAM LAMPHUN</small></td>
+                            <td>NT2</td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox"></td>
+                            <td>5</td>
+                            <td>5101000001</td>
+                            <td>ภูมิภาค 3</td>
+                            <td><span class="status-badge status-open">LPN1</span></td>
+                            <td>ลำพูน 2<br><small style="color: #999;">ลำพูน 2</small></td>
+                            <td>LAMPHUN 2<br><small style="color: #999;">LAMPHUN 2</small></td>
+                            <td>NT2</td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="pagination">
+                
+                
+                <!-- ปุ่ม Upload to Firebase (ซ่อนไว้ตอนแรก) -->
+                <button id="uploadFirebaseBtn" class="upload-firebase-btn">
+                    <i class="fas fa-cloud-upload-alt"></i> Upload to Firebase
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // ===== Toggle Submenu =====
+        document.querySelectorAll('.menu-item[data-submenu]').forEach(item => {
+            const submenuId = item.getAttribute('data-submenu');
+            const submenu = document.getElementById(submenuId);
+            
+            // เปิด submenu ของ menu item ที่ active ตั้งแต่แรก
+            if (item.classList.contains('active')) {
+                submenu.classList.add('show');
+            }
+            
+            item.addEventListener('click', function(e) {
+                e.stopPropagation();
+                
+                // Toggle class active
+                this.classList.toggle('active');
+                
+                // Toggle submenu
+                submenu.classList.toggle('show');
+            });
+        });
+    </script>
+</body>
+</html>

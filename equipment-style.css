@@ -1,0 +1,221 @@
+/* ===== equipment-style.css (สำหรับหน้ารายการอุปกรณ์) ===== */
+
+/* 🚨 Note: Sidebar, Top Bar, Table base styles ถูกดึงมาจาก maeta-style.css ใน HTML */
+
+.section-title {
+    font-size: 22px;
+    font-weight: 600;
+    margin: 15px 30px;
+    color: #333;
+}
+
+.section-subtitle {
+    font-size: 18px;
+    font-weight: 500;
+    margin: 15px 0 10px 0;
+    color: #555;
+}
+
+/* ===== Category Header Stats (ใหม่) ===== */
+.category-header-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 15px;
+    padding: 0 30px 20px 30px;
+}
+
+.stat-card-eq {
+    background: white;
+    padding: 15px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.stat-card-eq:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.stat-card-eq i {
+    display: block;
+    font-size: 24px;
+    margin-bottom: 5px;
+    color: #FFD101;
+}
+
+/* ===== Inventory Table Container ===== */
+.inventory-container {
+    background: white;
+    border-radius: 12px;
+    padding: 20px 30px;
+    margin: 0 30px 20px 30px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 15px;
+}
+
+.search-box {
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    width: 350px;
+    font-size: 14px;
+    max-width: 100%;
+}
+
+.add-btn {
+    padding: 10px 20px;
+    background: #FFD101;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.2s;
+    white-space: nowrap;
+}
+
+.add-btn:hover {
+    background: #f7c600;
+}
+
+/* ===== Table Styling ===== */
+.table-wrapper {
+    overflow-x: auto;
+}
+
+#eqTable { 
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#eqTable thead {
+    background: #f5f5f5;
+}
+
+#eqTable th, #eqTable td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+}
+
+#eqTable th {
+    font-weight: 600;
+    color: #555;
+}
+
+#eqTable tbody tr:hover {
+    background: #f9f9f9;
+    cursor: pointer;
+}
+
+/* Style สำหรับแถวที่ถูกเลือก */
+#eqTable tbody tr.selected {
+    background: #e6f7ff;
+    font-weight: 600;
+    border-left: 5px solid #1890ff;
+}
+
+/* ===== Action Buttons ===== */
+.action-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    margin-right: 5px;
+    transition: color 0.2s;
+}
+
+.edit-btn i { color: #f39c12; }
+.delete-btn i { color: #e74c3c; }
+
+
+/* ===== Detail Gallery Section (NEW) ===== */
+.detail-gallery-section {
+    background: white;
+    border-radius: 12px;
+    padding: 20px 30px;
+    margin: 0 30px 20px 30px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.detail-gallery-content {
+    display: grid;
+    grid-template-columns: 1fr 2fr; /* 1 ส่วนสำหรับ Metadata, 2 ส่วนสำหรับรูปใหญ่ */
+    gap: 30px;
+}
+
+/* 1. Metadata List (รายการรูปย่อด้านซ้าย) */
+.metadata-gallery-list {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.gallery-metadata-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+    color: #333;
+}
+
+.gallery-metadata-item small {
+    color: #999;
+    margin-left: 10px;
+}
+
+.gallery-metadata-item .delete-icon {
+    color: #e74c3c;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+/* 2. Image Viewer (รูปใหญ่ด้านขวา) */
+.image-viewer-section {
+    display: flex;
+    flex-direction: column;
+}
+
+.current-unit-viewer {
+    flex: 1;
+    min-height: 300px;
+    background: #f9f9f9;
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.current-unit-viewer img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.viewer-placeholder {
+    padding: 30px;
+    color: #999;
+    font-style: italic;
+}
+
+/* ===== Responsive ===== */
+@media screen and (max-width: 992px) {
+    .detail-gallery-content {
+        grid-template-columns: 1fr; /* บนจอเล็กให้เรียงเป็นแนวตั้ง */
+    }
+}

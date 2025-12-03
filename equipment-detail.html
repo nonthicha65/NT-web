@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equipment Detail</title> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="equipment-style.css"> <link rel="stylesheet" href="maeta-style.css"> <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+</head>
+<body>
+    <button class="toggle-sidebar" id="toggleSidebar">
+        <i class="fas fa-bars"></i>
+    </button>
+    
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    
+    <div class="sidebar" id="sidebar">
+        <div class="admin-header">
+            <div class="admin-avatar"><i class="fas fa-user"></i></div>
+            <div class="admin-name">Admin</div>
+        </div>
+        
+        <div class="menu-section-title">Pages</div>
+        <div class="menu-item active" data-submenu="submenu1"> 
+            <i class="fas fa-building"></i> 
+            <span>แม่ทา</span>
+            <i class="fas fa-chevron-down menu-arrow"></i>
+        </div>
+        <div class="submenu-container" id="submenu1">
+            <div class="menu-sub-item active">Air Conditioner</div>
+            <div class="menu-sub-item">Battery</div>
+            <div class="menu-sub-item">Generator</div>
+            <div class="menu-sub-item">Transformer</div>
+            <div class="menu-sub-item">Rectifier</div>
+        </div>
+        
+        <div class="menu-item" data-submenu="submenu2">
+            <i class="fas fa-building"></i> 
+            <span>เขาห้วยแก้ว</span>
+            <i class="fas fa-chevron-down menu-arrow"></i>
+        </div>
+        <div class="submenu-container" id="submenu2">
+            <a href="equipment-detail.html?station=khaohuaikaew&type=air" class="menu-sub-item">Air Conditioner</a>
+            <div class="menu-sub-item">Battery</div>
+            <div class="menu-sub-item">Generator</div>
+            <div class="menu-sub-item">Transformer</div>
+            <div class="menu-sub-item">Rectifier</div>
+        </div>
+
+        <div class="logo">
+            <img src="logo.png" alt="Logo">
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="top-bar">
+            <div class="breadcrumb">Loading...</div>
+            <div class="top-bar-icons">
+                <button class="icon-btn"><i class="fas fa-search"></i></button>
+                <button class="icon-btn"><i class="fas fa-sun"></i></button>
+                <button class="icon-btn"><i class="fas fa-history"></i></button>
+                <button class="icon-btn"><i class="fas fa-bell"></i></button>
+                <button class="icon-btn"><i class="fas fa-expand"></i></button>
+            </div>
+        </div>
+        
+        <h2 class="section-title">หมวดหมู่</h2>
+        <div class="category-section">
+            
+            <div class="equipment-grid">    
+                <div class="equipment-item">
+                    <div class="stat-card-menu" style="background-image: url('img/air.png');"></div>
+                    <div class="equipment-name">Air </div>
+                </div>
+                
+                <div class="equipment-item">
+                    <div class="stat-card-menu" style="background-image: url('img/battery.png');"></div>
+                    <div class="equipment-name">Battery</div>
+                </div>
+                
+                <div class="equipment-item">
+                    <div class="stat-card-menu" style="background-image: url('img/generator.png');"></div>
+                    <div class="equipment-name">Generator</div>
+                </div>
+                
+                <div class="equipment-item">
+                   <div class="stat-card-menu" style="background-image: url('img/transformer.png');"></div>
+                    <div class="equipment-name">Transformer</div>
+                </div>
+                
+                <div class="equipment-item">
+                    <div class="stat-card-menu" style="background-image: url('img/Rectifier.png');"></div>
+                    <div class="equipment-name">Rectifier</div>
+                </div>
+                
+                <div class="equipment-item">
+                    <div class="stat-card-menu" style="background-image: url('img/PEA-Meter.png');"></div>
+                    <div class="equipment-name">PEA Meter</div>
+                </div>
+                
+                <div class="equipment-item">
+                    <div class="stat-card-menu" style="background-image: url('img/Solar-Cell.png');"></div>
+                    <div class="equipment-name">Solar Cell</div>
+                </div>
+            </div>
+        </div>
+
+
+        <h2 class="section-title" id="inventoryTitle">Air Conditioner</h2>
+
+        <div class="inventory-container">
+            <div class="table-header">
+                <input type="text" class="search-box" id="eqSearchInput" placeholder="ค้นหา Serial Number, รหัสศูนย์...">
+                <button class="add-btn" id="addEqBtn"><i class="fas fa-plus"></i> Add Unit</button>
+            </div>
+
+            <div class="table-wrapper">
+                <table id="eqTable">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>รหัสทรัพย์สินใหม่</th>
+                            <th>รหัสทรัพย์สินเดิม</th>
+                            <th>Serial Number</th>
+                            <th>Cap.date</th>
+                            <th>รหัสศูนย์</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="eqTableBody">
+                        </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <div class="detail-gallery-section">
+            <div class="detail-gallery-content">
+                <div class="metadata-gallery-list">
+                    <h3 class="section-subtitle">รูปภาพ</h3>
+                    <div id="metadataGalleryContainer">
+                        <div class="gallery-metadata-item">Loading...</div>
+                    </div>
+                </div>
+
+                <div class="image-viewer-section">
+                    <h3 class="section-subtitle" id="galleryTitle">รูปภาพที่เกี่ยวข้อง (No Unit Selected)</h3>
+                    <div class="current-unit-viewer" id="currentUnitViewer">
+                        <div class="viewer-placeholder">Select a row to view images.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="equipment-scripts.js"></script> 
+</body>
+</html>
